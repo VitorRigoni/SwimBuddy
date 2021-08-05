@@ -2,6 +2,7 @@ namespace App
 
 open Feliz
 open Feliz.Router
+open Feliz.Bulma
 
 type Components =
     /// <summary>
@@ -9,7 +10,39 @@ type Components =
     /// Shows a header with the text Hello World
     /// </summary>
     [<ReactComponent>]
-    static member HelloWorld() = Html.h1 "Hello World"
+    static member HelloWorld() =
+        let sliderChanged (value: string) =
+            let intValue = int value
+            match intValue with
+            | x when x > 50 -> color.isDanger
+            | x when x < 50 -> color.isSuccess
+            | _ -> color.isInfo
+    
+        Bulma.container [
+            Bulma.column [
+                Bulma.title "SwimBuddy"
+                Html.div "Helping you prepare your swim training"
+                Bulma.card [
+                    Bulma.cardImage [
+                        Bulma.image [
+                            image.is4by3
+                            prop.children [
+                                Html.img [ 
+                                    prop.alt "Swimmer stretching"
+                                    prop.src "https://www.orthocarolina.com/imagecache/mobile/compReg/swimmer_stretch_1.jpeg"
+                                ]
+                            ]
+                        ]
+                    ]
+                    Bulma.cardHeader [
+                        Bulma.cardHeaderTitle.p "SwimBuddy"
+                    ]
+                    Bulma.cardContent [
+                        prop.text "Select the difficulty"
+                    ]
+                ] 
+            ]
+        ]
 
     /// <summary>
     /// A stateful React component that maintains a counter
